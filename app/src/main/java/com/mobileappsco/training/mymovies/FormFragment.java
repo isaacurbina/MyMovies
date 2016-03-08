@@ -59,19 +59,13 @@ public class FormFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String q = "";
         String title, year;
         title = formTitle.getText().toString();
         year = formYear.getText().toString();
-        q = "/search/movie?";
-        if (title.length()>0)
-            q += "query="+URLEncoder.encode(title);
-        if (year.length()>0)
-            q += "&year="+URLEncoder.encode(year);
-        mListener.bridgeWithForm(q);
+        mListener.bridgeWithForm(title, year);
     }
 
     public interface FormFragmentListener {
-        void bridgeWithForm(String q);
+        void bridgeWithForm(String title, String year);
     }
 }

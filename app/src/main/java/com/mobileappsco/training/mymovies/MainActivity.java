@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
     }
 
     @Override
-    public void bridgeWithForm(String q) {
-        searchFragment.makeJsonObjectRequest(q);
+    public void bridgeWithForm(String title, String year) {
+        searchFragment.makeJsonObjectRequest(title, year);
     }
 
     @Override

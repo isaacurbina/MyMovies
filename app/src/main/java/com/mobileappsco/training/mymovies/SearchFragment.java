@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(gaggeredGridLayoutManager);
         adapter = new RVAdapter(context, cinematics);
         recyclerView.setAdapter(adapter);
-        makeJsonObjectRequest("");
+        //makeJsonObjectRequest("", "");
         return v;
     }
 
@@ -82,14 +83,20 @@ public class SearchFragment extends Fragment {
         searchListener = null;
     }
 
-    public void makeJsonObjectRequest(String query) {
+    public void makeJsonObjectRequest(String title, String year) {
 
         String request = AppController.apiUrl;
-        if (query.length()<1) {
+
+        if (title.length()<1 && year.length()<1) {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String now = df.format(new Date());
             request += "/discover/movie?primary_release_date.lte=" + now;
         } else {
+            String query = "/search/movie?";
+            if (title.length()>0)
+                query += "query="+ URLEncoder.encode(title);
+            if (year.length()>0)
+                query += "&year="+URLEncoder.encode(year);
             request += query;
             cinematics.removeAll(cinematics);
         }
