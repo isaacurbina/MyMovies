@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,7 +37,9 @@ public class SearchFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_list_results);
         recyclerView.setHasFixedSize(true);
         llm = new LinearLayoutManager(inflater.getContext());
-        recyclerView.setLayoutManager(llm);
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(manager);
+        //recyclerView.setLayoutManager(llm);
         adapter = new RVAdapter(inflater.getContext(), cinematics);
         recyclerView.setAdapter(adapter);
         return v;

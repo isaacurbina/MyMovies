@@ -18,8 +18,6 @@ public class Helpers {
     // Example new movies
     // http://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2014-10-22&api_key=cac0b89ef7b5aa3a980f240f7c20af68
 
-    String MYTAG = "MyMovies";
-
     public String getApiKey(Context context) {
         String apiKey= "";
         try {
@@ -69,15 +67,15 @@ public class Helpers {
     public void logAndToast(Context context, String message, int type) {
         switch (type) {
             case Log.INFO:
-                Log.i(MYTAG, message);
+                Log.i(AppController.MYTAG, message);
                 //Toast.makeText(context, "INFO >> "+message, Toast.LENGTH_SHORT).show();
                 break;
             case Log.ERROR:
-                Log.e(MYTAG, message);
+                Log.e(AppController.MYTAG, message);
                 //Toast.makeText(context, "ERROR >> "+message, Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Log.d(MYTAG, message);
+                Log.d(AppController.MYTAG, message);
                 //Toast.makeText(context, "Debug >> "+message, Toast.LENGTH_SHORT).show();
                 break;
         }

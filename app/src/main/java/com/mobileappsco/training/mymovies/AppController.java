@@ -10,6 +10,11 @@ import com.android.volley.toolbox.Volley;
 public class AppController extends com.orm.SugarApp {
 
     public static final String TAG = AppController.class.getSimpleName();
+    public static final String MYTAG = "MYMOVIES";
+    public static String apiKey;
+    public static String apiUrl;
+    public static String apiImage;
+    public static Helpers helper;
 
     private RequestQueue mRequestQueue;
 
@@ -19,6 +24,11 @@ public class AppController extends com.orm.SugarApp {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+        helper = new Helpers();
+        apiKey = helper.getApiKey(this);
+        apiUrl = helper.getAPIURL(this);
+        apiImage = helper.getAPIImage(this);
     }
 
     public static synchronized AppController getInstance() {

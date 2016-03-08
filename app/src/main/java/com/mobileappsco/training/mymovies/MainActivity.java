@@ -31,8 +31,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SearchFragment.SearchFragmentListener {
 
     private View mProgressView;
-    String apiUrl, apiKey, apiImage;
-    Helpers helper = new Helpers();
     SearchFragment searchFragment;
 
     @Override
@@ -45,11 +43,6 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
         actionBar.setLogo(R.mipmap.ic_launcher);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-
-        // Get API URL
-        apiUrl = helper.getAPIURL(this);
-        apiKey = helper.getApiKey(this);
-        apiImage = helper.getAPIImage(this);
 
         // Get fragments
         searchFragment = (SearchFragment) getFragmentManager().findFragmentById(R.id.search_fragment);
@@ -87,10 +80,10 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String now = df.format(new Date());
-        String request = apiUrl+
+        String request = AppController.apiUrl+
                 "/discover/movie?primary_release_date.lte="+now+
-                "&api_key="+apiKey;
-        helper.logAndToast(getApplicationContext(), "request volley: "+request, Log.INFO);
+                "&api_key="+AppController.apiKey;
+        AppController.helper.logAndToast(getApplicationContext(), "request volley: " + request, Log.INFO);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 request, null, new Response.Listener<JSONObject>() {
@@ -98,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
             @Override
             public void onResponse(JSONObject response) {
 
-                helper.logAndToast(getApplicationContext(), response.toString(), Log.INFO);
+                AppController.helper.logAndToast(getApplicationContext(), response.toString(), Log.INFO);
 
                 try {
 
@@ -129,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
                         if (item.has("original_language") && item.getString("original_language")!=null)
                             c.original_language = item.getString("original_language");
 
-                        helper.logAndToast(getApplicationContext(), "Cinematic ID: "+c.id+" Title: "+c.title, Log.INFO);
+                        AppController.helper.logAndToast(getApplicationContext(), "Cinematic ID: " + c.id + " Title: " + c.title, Log.INFO);
                         c.save();
                         searchFragment.cinematics.add(c);
                     }
@@ -142,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                helper.logAndToast(getApplicationContext(), "VOLLEY ERROR: " + error.getMessage(), Log.ERROR);
+                AppController.helper.logAndToast(getApplicationContext(), "VOLLEY ERROR: " + error.getMessage(), Log.ERROR);
                 searchFragment.cinematics = Cinematic.listAll(Cinematic.class);
                 searchFragment.adapter.notifyDataSetChanged();
             }
