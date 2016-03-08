@@ -5,6 +5,8 @@
     android:id="@+id/card_view"
     android:layout_gravity="center_vertical"
     android:background="@android:drawable/gallery_thumb"
+    android:padding="5dp"
+    android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -12,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="5dp"
         >
 
         <ImageView
@@ -57,9 +59,10 @@
                 android:hint="@string/card_overview_hint"
                 android:layout_below="@+id/card_title"
                 android:ellipsize="end"
-                android:maxLines="3" />
+                android:maxLines="5" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

@@ -21,15 +21,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CinematicViewHolde
 
     List<Cinematic> cinematics;
     Context context;
-    String apiUrl, apiKey, apiImage;
     Helpers helper = new Helpers();
 
     public RVAdapter(Context context, List<Cinematic> cinematics){
         this.context = context;
         this.cinematics = cinematics;
-        apiUrl = helper.getAPIURL(context);
-        apiKey = helper.getApiKey(context);
-        apiImage = helper.getAPIImage(context);
     }
 
     @Override
@@ -44,8 +40,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CinematicViewHolde
         holder.card_title.setText(cinematics.get(i).title);
         holder.card_vote_average.setText(Double.toString(cinematics.get(i).vote_average));
         holder.card_overview.setText(cinematics.get(i).overview);
-        Glide.with(context).load(apiImage+cinematics.get(i).poster_path).into(holder.card_poster);
-        helper.logAndToast(context, "Glide loading: "+apiImage+cinematics.get(i), Log.INFO);
+        Glide.with(context).load(AppController.apiImage+cinematics.get(i).poster_path).into(holder.card_poster);
+        //helper.logAndToast(context, "Glide loading: "+apiImage+cinematics.get(i), Log.INFO);
     }
 
     @Override

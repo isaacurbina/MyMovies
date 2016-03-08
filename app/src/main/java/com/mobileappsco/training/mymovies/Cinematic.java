@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Cinematic extends SugarRecord {
 
-    int id;
+    int mid;
     String title;
     String overview;
     String release_date;
@@ -23,7 +23,7 @@ public class Cinematic extends SugarRecord {
     {
     }
 
-    public Cinematic(int id,
+    public Cinematic(int mid,
                      String title,
                      String overview,
                      String release_date,
@@ -33,7 +33,7 @@ public class Cinematic extends SugarRecord {
                      String video_path,
                      String original_language)
     {
-        this.id = id;
+        this.mid = mid;
         this.title = title;
         this.overview = overview;
         this.release_date = release_date;
