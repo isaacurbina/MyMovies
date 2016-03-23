@@ -19,11 +19,6 @@
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.mobileappsco.training.mymovies" />
 
-        <!-- The Movie DB -->
-        <meta-data android:name="API_KEY" android:value="cac0b89ef7b5aa3a980f240f7c20af68" />
-        <meta-data android:name="API_URL" android:value="http://api.themoviedb.org/3" />
-        <meta-data android:name="API_IMAGE" android:value="http://image.tmdb.org/t/p/w500" />
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
