@@ -1,24 +1,23 @@
-package com.mobileappsco.training.mymovies;
+package com.mobileappsco.training.mymovies.Fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.net.URLEncoder;
+import com.mobileappsco.training.mymovies.R;
 
-public class FormFragment extends Fragment implements View.OnClickListener {
+public class SearchFormFragment extends Fragment implements View.OnClickListener {
 
     private FormFragmentListener mListener;
     EditText formTitle, formYear;
     Button formButton;
 
-    public FormFragment() {
+    public SearchFormFragment() {
         // Required empty public constructor
     }
 
@@ -32,7 +31,7 @@ public class FormFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_form, container, false);
+        View v = inflater.inflate(R.layout.fragment_searchform, container, false);
         formTitle = (EditText) v.findViewById(R.id.form_title);
         formYear = (EditText) v.findViewById(R.id.form_year);
         formButton = (Button) v.findViewById(R.id.form_button);

@@ -19,7 +19,8 @@ public class RetrofitHelper {
                 .build();
         RetrofitInterface rfInterface = retrofit.create(RetrofitInterface.class);
 
-        Call<Page> request = rfInterface.discoverMovies();
+        Call<Page> request = rfInterface.discoverMovies("cac0b89ef7b5aa3a980f240f7c20af68",
+                                            "popularity.desc");
 
         Page pages = null;
 
@@ -29,7 +30,7 @@ public class RetrofitHelper {
                 System.out.println(result.getTitle());
             }
         } catch (Exception e) {
-            Log.e("MYAPP", "Error: " + e.getStackTrace());
+            System.out.println("Error: " + e.getMessage());
         }
 
     }

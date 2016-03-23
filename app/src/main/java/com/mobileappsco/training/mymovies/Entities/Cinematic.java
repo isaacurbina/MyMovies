@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies;
+package com.mobileappsco.training.mymovies.Entities;
 
 import com.orm.SugarRecord;
 

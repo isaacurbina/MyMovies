@@ -8,25 +8,19 @@
     <string name="card_overview_hint">Overview goes here...</string>
     <string name="form_title_hint">Movie Title</string>
     <string name="form_year_hint">Year</string>
-    
+
     <!-- themoviedb -->
     <string name="API_KEY">
         cac0b89ef7b5aa3a980f240f7c20af68
     </string>
     <string name="API_JSON_URL">
-        http://api.themoviedb.org/3
+        http://api.themoviedb.org/3/
     </string>
     <string name="API_IMAGES_URL">
         http://image.tmdb.org/t/p/w500
     </string>
     <string name="MY_TAG">
         com.mobileappsco.training.mymovies
-    </string>
-    <string name="DISCOVER_PATH">
-        /discover/movie?
-    </string>
-    <string name="SEARCH_PATH">
-        /search/movie?
     </string>
 
 </resources>

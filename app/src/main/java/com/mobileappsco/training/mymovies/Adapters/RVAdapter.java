@@ -1,9 +1,8 @@
-package com.mobileappsco.training.mymovies;
+package com.mobileappsco.training.mymovies.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.mobileappsco.training.mymovies.Entities.Result;
+import com.mobileappsco.training.mymovies.Helpers;
+import com.mobileappsco.training.mymovies.R;
 
 import java.util.List;
 
@@ -19,14 +21,14 @@ import java.util.List;
  */
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CinematicViewHolder>{
 
-    List<Cinematic> cinematics;
+    List<Result> results;
     Context context;
     Helpers helper = new Helpers();
     String API_IMAGE_URL;
 
-    public RVAdapter(Context context, List<Cinematic> cinematics){
+    public RVAdapter(Context context, List<Result> results){
         this.context = context;
-        this.cinematics = cinematics;
+        this.results = results;
         API_IMAGE_URL = context.getString(R.string.API_IMAGES_URL);
     }
 
@@ -39,15 +41,22 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CinematicViewHolde
 
     @Override
     public void onBindViewHolder(CinematicViewHolder holder, int i) {
-        holder.card_title.setText(cinematics.get(i).title);
-        holder.card_vote_average.setText(Double.toString(cinematics.get(i).vote_average));
-        holder.card_overview.setText(cinematics.get(i).overview);
-        Glide.with(context).load(API_IMAGE_URL+cinematics.get(i).poster_path).into(holder.card_poster);
+        holder.card_title.setText(results.get(i).getTitle());
+        holder.card_vote_average.setText(Double.toString(results.get(i).getVoteAverage()));
+        holder.card_overview.setText(results.get(i).getTitle());
+        Glide.with(context)
+                .load(API_IMAGE_URL + results.get(i).getPosterPath())
+                .into(holder.card_poster);
     }
 
     @Override
     public int getItemCount() {
-        return cinematics.size();
+        return results.size();
+    }
+
+    public void addResult(Result result) {
+        results.add(result);
+        notifyItemInserted(getItemCount()-1);
     }
 
     @Override

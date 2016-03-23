@@ -7,6 +7,21 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface RetrofitInterface {
-    @GET("discover/movie?sort_by=popularity.desc")
-    Call<Page> discoverMovies();
+    @GET("discover/movie")
+    Call<Page> discoverMovies(@Query("api_key") String apikey,
+                              @Query("sort_by") String sort_by);
+    @GET("search/movie")
+    Call<Page> searchMovieByTitle(@Query("api_key") String apikey,
+                                  @Query("query") String title,
+                                  @Query("sort_by") String sort_by);
+
+    @GET("discover/movie")
+    Call<Page> searchMovieByYear(@Query("api_key") String apikey,
+                                 @Query("primary_release_year") String year,
+                                 @Query("sort_by") String sort_by);
+    @GET("search/movie")
+    Call<Page> searchMovieByTitleAndYear(@Query("api_key") String apikey,
+                                         @Query("query") String title,
+                                        @Query("primary_release_year") String year,
+                                        @Query("sort_by") String sort_by);
 }

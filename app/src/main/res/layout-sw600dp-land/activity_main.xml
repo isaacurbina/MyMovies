@@ -14,19 +14,18 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.mobileappsco.training.mymovies.FormFragment"
+        android:name="com.mobileappsco.training.mymovies.Fragments.SearchFormFragment"
         android:id="@+id/fragment"
         android:layout_gravity="center"
         android:layout_weight="3"
-        tools:layout="@layout/fragment_form" />
+        tools:layout="@layout/fragment_searchform" />
 
-    <fragment
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.mobileappsco.training.mymovies.SearchFragment"
-        android:id="@+id/search_fragment"
+        android:id="@+id/search_fragment_container"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_search" />
+        android:layout_weight="1" >
+    </FrameLayout>
 
 </LinearLayout>

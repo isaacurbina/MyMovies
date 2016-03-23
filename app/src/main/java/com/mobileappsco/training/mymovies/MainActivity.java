@@ -1,18 +1,24 @@
 package com.mobileappsco.training.mymovies;
 
-import android.net.Uri;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+
+import com.mobileappsco.training.mymovies.Fragments.ResultsFragment;
+import com.mobileappsco.training.mymovies.Fragments.SearchFormFragment;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class MainActivity extends AppCompatActivity implements SearchFragment.SearchFragmentListener, FormFragment.FormFragmentListener {
+public class MainActivity extends AppCompatActivity implements ResultsFragment.SearchFragmentListener, SearchFormFragment.FormFragmentListener {
 
-    SearchFragment searchFragment;
-    FormFragment formFragment;
+    FragmentManager fragmentManager = getFragmentManager();
+    ResultsFragment resultsFragment;
+    SearchFormFragment searchFormFragment;
+    String RESTAG = "RESTAG";
+    public static String API_JSON_URL, API_IMAGES_URL, API_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +31,35 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
+        API_KEY = getResources().getString(R.string.API_KEY);
+        API_JSON_URL = getResources().getString(R.string.API_JSON_URL);
+        API_IMAGES_URL = getResources().getString(R.string.API_IMAGES_URL);
+
         // Get fragments
-        searchFragment = (SearchFragment) getFragmentManager().findFragmentById(R.id.search_fragment);
-        formFragment = (FormFragment) getFragmentManager().findFragmentById(R.id.form_fragment);
+        if (findViewById(R.id.search_fragment_container) != null) {
+            if (savedInstanceState == null) {
+                resultsFragment = new ResultsFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.search_fragment_container, resultsFragment, RESTAG)
+                        .commit();
+            }
+        }
+        searchFormFragment = (SearchFormFragment) getSupportFragmentManager().findFragmentById(R.id.searchform_fragment);
     }
 
     @Override
     public void bridgeWithForm(String title, String year) {
-        //searchFragment.makeJsonObjectRequest(title, year);
+        //resultsFragment.makeJsonObjectRequest(title, year);
+        // if it's tablet landscape
+        if (findViewById(R.id.search_fragment_container) != null) {
+            resultsFragment = ResultsFragment.newInstance(title, year);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.search_fragment_container, resultsFragment, RESTAG)
+                    .commit();
+
+        } else { // rest of the devices
+            //Intent i = new Intent(this, CatalogActivity.class);
+        }
     }
 
     @Override

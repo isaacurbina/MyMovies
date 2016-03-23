@@ -8,13 +8,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/main_container"
-    tools:context=".MainActivity">
+    android:id="@+id/results_container"
+    tools:context=".ResultsActivity">
 
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.mobileappsco.training.mymovies.Fragments.SearchFormFragment"
-        android:id="@+id/searchform_fragment" />
+        android:name="com.mobileappsco.training.mymovies.Fragments.ResultsFragment"
+        android:id="@+id/results_fragment" />
 
 </LinearLayout>
