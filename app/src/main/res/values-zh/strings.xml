@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">我的电影</string>
+    <string name="player_error">错误初始化YouTube播放器</string>
+    <string name="language">zh</string>
+    <string name="form_title_hint">电影片名</string>
+    <string name="OAUTH_KEY" translatable="false"></string>
+    <string name="action_settings">设置</string>
+    <string name="card_id_hint">卡的ID</string>
+    <string name="card_overview_hint">概述在这里。。。</string>
+    <string name="card_title_hint">标题</string>
+    <string name="card_vote_average_hint">评分</string>
+    <string name="form_button">搜索</string>
+    <string name="form_year_hint">年</string>
+    <string name="search_title_hint">标题</string>
+    <string name="search_year_hint">年</string>
+    <string name="seek_to">跳到</string>
+    <string name="seek_to_hint">秒钟</string>
+</resources>

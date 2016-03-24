@@ -58,10 +58,12 @@
             <Button
                 android:id="@+id/form_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/form_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
                 android:textStyle="bold" />
 
         </LinearLayout>

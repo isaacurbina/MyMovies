@@ -2,11 +2,12 @@ package com.mobileappsco.training.mymovies.Entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Page {
+public class PageResults extends SugarRecord {
 
     @SerializedName("page")
     @Expose

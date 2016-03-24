@@ -17,6 +17,13 @@
         android:padding="5dp"
         >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/card_id"
+            android:hint="@string/card_id_hint"
+            android:visibility="gone"/>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,9 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/card_overview"
-                android:layout_toRightOf="@+id/card_poster"
                 android:hint="@string/card_overview_hint"
-                android:layout_below="@+id/card_title"
                 android:ellipsize="end"
                 android:maxLines="5" />
 

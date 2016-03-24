@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">I Miei Flilm</string>
+    <string name="action_settings">Configurazione</string>
+    <string name="card_id_hint">ID della Carta</string>
+    <string name="card_overview_hint">Ecco il sommario</string>
+    <string name="card_title_hint">Titolo</string>
+    <string name="card_vote_average_hint">Valutazione</string>
+    <string name="form_button">Cercare</string>
+    <string name="form_title_hint">Titolo del Film</string>
+    <string name="form_year_hint">Anno</string>
+    <string name="language">it</string>
+    <string name="search_title_hint">Titolo</string>
+    <string name="search_year_hint">Anno</string>
+    <string name="seek_to">Andare a</string>
+    <string name="seek_to_hint">Secondi</string>
+    <string name="player_error">Errore durante l\'inizializzazione del player di YouTube</string>
+</resources>

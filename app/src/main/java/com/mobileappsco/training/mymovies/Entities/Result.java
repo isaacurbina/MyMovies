@@ -3,10 +3,13 @@ package com.mobileappsco.training.mymovies.Entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Table
 public class Result {
 
     @SerializedName("poster_path")
@@ -26,7 +29,7 @@ public class Result {
     private List<Integer> genreIds = new ArrayList<Integer>();
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("original_title")
     @Expose
     private String originalTitle;
@@ -51,6 +54,10 @@ public class Result {
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
+
+    public Result() {
+
+    }
 
     /**
      * 
@@ -147,7 +154,7 @@ public class Result {
      * @return
      *     The id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -156,7 +163,7 @@ public class Result {
      * @param id
      *     The id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

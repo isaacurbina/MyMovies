@@ -11,16 +11,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mobileappsco.training.mymovies.Entities.Result;
-import com.mobileappsco.training.mymovies.Helpers;
 import com.mobileappsco.training.mymovies.R;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ResultViewHolder> {
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ResultViewHolder>  {
 
     List<Result> results;
     Context context;
-    Helpers helper = new Helpers();
     String API_IMAGE_URL;
 
     public RVAdapter(Context context, List<Result> results){
@@ -41,6 +39,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ResultViewHolder> 
         holder.card_title.setText(results.get(i).getTitle());
         holder.card_vote_average.setText(Double.toString(results.get(i).getVoteAverage()));
         holder.card_overview.setText(results.get(i).getOverview());
+        holder.card_id.setText(String.valueOf(results.get(i).getId()));
         Glide.with(context)
                 .load(API_IMAGE_URL + results.get(i).getPosterPath())
                 .into(holder.card_poster);
@@ -53,7 +52,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ResultViewHolder> 
 
     public void addResult(Result result) {
         results.add(result);
-        notifyItemInserted(getItemCount()-1);
+        notifyItemInserted(getItemCount() - 1);
     }
 
     public void addResultList(List<Result> list) {
@@ -75,6 +74,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ResultViewHolder> 
         TextView card_title;
         TextView card_vote_average;
         TextView card_overview;
+        TextView card_id;
 
         ResultViewHolder(View itemView) {
             super(itemView);
@@ -83,7 +83,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ResultViewHolder> 
             card_title = (TextView)itemView.findViewById(R.id.card_title);
             card_vote_average = (TextView)itemView.findViewById(R.id.card_vote_average);
             card_overview = (TextView)itemView.findViewById(R.id.card_overview);
+            card_id = (TextView)itemView.findViewById(R.id.card_id);
         }
+
     }
 
 }

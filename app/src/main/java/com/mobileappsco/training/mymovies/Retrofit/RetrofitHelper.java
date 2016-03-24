@@ -1,8 +1,6 @@
 package com.mobileappsco.training.mymovies.Retrofit;
 
-import android.util.Log;
-
-import com.mobileappsco.training.mymovies.Entities.Page;
+import com.mobileappsco.training.mymovies.Entities.PageResults;
 import com.mobileappsco.training.mymovies.Entities.Result;
 
 import retrofit2.Call;
@@ -19,16 +17,17 @@ public class RetrofitHelper {
                 .build();
         RetrofitInterface rfInterface = retrofit.create(RetrofitInterface.class);
 
-        Call<Page> request = rfInterface.discoverMovies("cac0b89ef7b5aa3a980f240f7c20af68",
+        Call<PageResults> request = rfInterface.discoverMovies("cac0b89ef7b5aa3a980f240f7c20af68",
                                             "popularity.desc",
-                                            "1");
+                                            "1",
+                                            "pt");
 
-        Page pages = null;
+        PageResults pages = null;
 
         try {
             pages = request.execute().body();
             for (Result result : pages.getResults()) {
-                System.out.println(result.getTitle());
+                System.out.println(result.getId()+" "+result.getTitle());
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

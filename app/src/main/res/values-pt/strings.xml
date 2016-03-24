@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Meus Filmes</string>
+    <string name="action_settings">Configuração</string>
+    <string name="card_id_hint">ID do Cartão</string>
+    <string name="card_overview_hint">Descrição geral vai aqui ...</string>
+    <string name="card_title_hint">Título</string>
+    <string name="card_vote_average_hint">Avaliação</string>
+    <string name="form_button">Fazer Pesquisa</string>
+    <string name="form_title_hint">Título do Filme</string>
+    <string name="form_year_hint">Ano</string>
+    <string name="language">pt</string>
+    <string name="search_title_hint">Título</string>
+    <string name="search_year_hint">Ano</string>
+    <string name="seek_to">Ir a</string>
+    <string name="seek_to_hint">Segundos</string>
+    <string name="player_error">Erro ao inicializar o reprodutor do YouTube</string>
+</resources>
