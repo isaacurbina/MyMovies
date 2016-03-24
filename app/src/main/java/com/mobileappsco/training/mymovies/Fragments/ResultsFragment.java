@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.mobileappsco.training.mymovies.Listeners.EndlessRecyclerOnScrollListener;
 import com.mobileappsco.training.mymovies.Entities.Page;
 import com.mobileappsco.training.mymovies.Entities.Result;
 import com.mobileappsco.training.mymovies.Helpers;
@@ -30,17 +32,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ResultsFragment extends Fragment {
 
     String search_title, search_year;
-    SearchFragmentListener searchListener;
+    ResultsFragmentListener searchListener;
     RecyclerView recyclerView;
     LinearLayoutManager llm;
-    List<Result> results;
     RVAdapter adapter;
     Context context;
-    StaggeredGridLayoutManager gaggeredGridLayoutManager;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
     boolean loading = false;
+    int columns = 1;
+    int page = 1;
 
     public ResultsFragment() {
         // Required empty public constructor
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    // Dynamically display different columns according to the device width
+    public int getSupportedColumns(View root) {
+        if (root.findViewById(R.id.tablet_portrait) != null)
+            return 3;
+        else if (root.findViewById(R.id.tablet_land) != null)
+            return 4;
+        else if (root.findViewById(R.id.phone_land) != null)
+            return 3;
+        else
+            return 2;
     }
 
     public static ResultsFragment newInstance(String title, String year) {
@@ -64,23 +83,39 @@ public class ResultsFragment extends Fragment {
             Helpers.logAndToast(getContext(), "Received title (" + search_title + ") and year (" + search_year + ")", Log.INFO);
         }
 
+        this.columns = getSupportedColumns(container.getRootView());
+        Helpers.logAndToast(getContext(), "Supports => " + this.columns + " columns", Log.INFO);
+
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_results, container, false);
         // Recycler View in ResultsFragment
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_list_results);
         recyclerView.setHasFixedSize(true);
-        gaggeredGridLayoutManager = new StaggeredGridLayoutManager(4, 1);
-        recyclerView.setLayoutManager(gaggeredGridLayoutManager);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(columns, 1);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(staggeredGridLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                // do something...
+                if (!loading) {
+                    loading = true;
+                    page++;
+                    Toast.makeText(context, "Loading page "+page, Toast.LENGTH_SHORT).show();
+                    FetchMoviesTask mytask = new FetchMoviesTask();
+                    mytask.execute(search_title, search_year, String.valueOf(page));
+                }
+            }
+        });
         FetchMoviesTask mytask = new FetchMoviesTask();
-        mytask.execute(search_title, search_year);
+        mytask.execute(search_title, search_year, String.valueOf(page));
         return v;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof SearchFragmentListener) {
-            searchListener = (SearchFragmentListener) context;
+        if (context instanceof ResultsFragmentListener) {
+            searchListener = (ResultsFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement SearchFragmentListener");
@@ -93,8 +128,8 @@ public class ResultsFragment extends Fragment {
         searchListener = null;
     }
 
-    public interface SearchFragmentListener {
-        void bridgeWithSearch(String q);
+    public interface ResultsFragmentListener {
+        void bridgeWithResults(String q);
     }
 
     private class FetchMoviesTask extends AsyncTask<String, Integer, List<Result>> {
@@ -110,24 +145,30 @@ public class ResultsFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<Result> results) {
-            super.onPostExecute(results);
+        protected void onPostExecute(List<Result> resultstask) {
+            super.onPostExecute(resultstask);
             try {
-                if (results==null) {
+                if (resultstask==null) {
                     Helpers.logAndToast(getContext(), "No results found", Log.INFO);
                 } else {
-                    adapter = new RVAdapter(context, results);
-                    recyclerView.setAdapter(adapter);
+                    //results.addAll(resultstask);
+                    if (adapter != null) {
+                        adapter.addResultList(resultstask);
+                    } else {
+                        adapter = new RVAdapter(context, resultstask);
+                        recyclerView.setAdapter(adapter);
+                    }
                 }
             } catch (Exception e) {
                 Log.e("MYTAG", "ERROR for: " +e.getMessage());
             }
+            loading = false;
         }
 
         @Override
         protected List<Result> doInBackground(String... params) {
 
-            Helpers.logAndToast(getContext(), "String... params => "+params[0]+", "+params[1], Log.INFO);
+            Helpers.logAndToast(getContext(), "String... params => " + params[0] + ", " + params[1] + ", " + params[2], Log.INFO);
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(getResources().getString(R.string.API_JSON_URL))
@@ -137,23 +178,45 @@ public class ResultsFragment extends Fragment {
 
             boolean hasTitle = false;
             boolean hasYear = false;
-            if (params[0] != null && params[0].length()>0)
+            String search_title = params[0];
+            String search_year = params[1];
+            String api_key = MainActivity.API_KEY;
+            String page = params[2];
+            if (params[0] != null && params[0].length()>0) {
                 hasTitle = true;
-            if (params[1] != null && params[1].length()>0)
+            }
+            if (params[1] != null && params[1].length()>0) {
                 hasYear = true;
+            }
 
             Call<Page> request;
             if (hasTitle == true && hasYear == false) {
-                request = rfInterface.searchMovieByTitle(MainActivity.API_KEY, params[0], "popularity.desc");
+                request = rfInterface.searchMovieByTitle(
+                        api_key,
+                        search_title,
+                        "popularity.desc",
+                        page);
                 Helpers.logAndToast(getContext(), "searchMovieByTitle", Log.INFO);
             } else if (hasTitle == false && hasYear == true) {
-                request = rfInterface.searchMovieByYear(MainActivity.API_KEY, params[1], "vote_average.desc");
+                request = rfInterface.searchMovieByYear(
+                        api_key,
+                        search_year,
+                        "vote_average.desc",
+                        page);
                 Helpers.logAndToast(getContext(), "searchMovieByYear", Log.INFO);
             } else if (hasTitle == true && hasYear == true) {
-                request = rfInterface.searchMovieByTitleAndYear(MainActivity.API_KEY, params[0], params[1], "primary_release_year.desc");
+                request = rfInterface.searchMovieByTitleAndYear(
+                        api_key,
+                        search_title,
+                        search_year,
+                        "primary_release_year.desc",
+                        page);
                 Helpers.logAndToast(getContext(), "searchMovieByTitleAndYear", Log.INFO);
             } else {
-                request = rfInterface.discoverMovies(MainActivity.API_KEY, "popularity.desc");
+                request = rfInterface.discoverMovies(
+                        api_key,
+                        "popularity.desc",
+                        page);
                 Helpers.logAndToast(getContext(), "discoverMovies", Log.INFO);
             }
 

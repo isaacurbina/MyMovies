@@ -16,10 +16,7 @@ import com.mobileappsco.training.mymovies.R;
 
 import java.util.List;
 
-/**
- * Created by admin on 3/7/2016.
- */
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CinematicViewHolder>{
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ResultViewHolder> {
 
     List<Result> results;
     Context context;
@@ -33,17 +30,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CinematicViewHolde
     }
 
     @Override
-    public CinematicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        CinematicViewHolder cvh = new CinematicViewHolder(v);
+        ResultViewHolder cvh = new ResultViewHolder(v);
         return cvh;
     }
 
     @Override
-    public void onBindViewHolder(CinematicViewHolder holder, int i) {
+    public void onBindViewHolder(ResultViewHolder holder, int i) {
         holder.card_title.setText(results.get(i).getTitle());
         holder.card_vote_average.setText(Double.toString(results.get(i).getVoteAverage()));
-        holder.card_overview.setText(results.get(i).getTitle());
+        holder.card_overview.setText(results.get(i).getOverview());
         Glide.with(context)
                 .load(API_IMAGE_URL + results.get(i).getPosterPath())
                 .into(holder.card_poster);
@@ -59,19 +56,27 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CinematicViewHolde
         notifyItemInserted(getItemCount()-1);
     }
 
+    public void addResultList(List<Result> list) {
+        if (results == null)
+            results = list;
+        else
+            results.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public static class CinematicViewHolder extends RecyclerView.ViewHolder {
+    public static class ResultViewHolder extends RecyclerView.ViewHolder {
         CardView card_view;
         ImageView card_poster;
         TextView card_title;
         TextView card_vote_average;
         TextView card_overview;
 
-        CinematicViewHolder(View itemView) {
+        ResultViewHolder(View itemView) {
             super(itemView);
             card_view = (CardView)itemView.findViewById(R.id.card_view);
             card_poster = (ImageView)itemView.findViewById(R.id.card_poster);

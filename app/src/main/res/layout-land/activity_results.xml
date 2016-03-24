@@ -8,16 +8,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/phone"
-    tools:context=".MainActivity">
+    android:id="@+id/phone_land"
+    tools:context=".ResultsActivity">
 
-    <fragment
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.mobileappsco.training.mymovies.Fragments.SearchFormFragment"
-        android:id="@+id/searchform_fragment"
+        android:id="@+id/results_fragment_container"
         android:layout_gravity="center"
-        android:layout_weight="3"
-        tools:layout="@layout/fragment_searchform" />
+        android:layout_weight="1" >
+    </FrameLayout>
 
 </LinearLayout>

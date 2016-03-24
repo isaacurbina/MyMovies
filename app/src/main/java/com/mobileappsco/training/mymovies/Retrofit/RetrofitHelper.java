@@ -20,7 +20,8 @@ public class RetrofitHelper {
         RetrofitInterface rfInterface = retrofit.create(RetrofitInterface.class);
 
         Call<Page> request = rfInterface.discoverMovies("cac0b89ef7b5aa3a980f240f7c20af68",
-                                            "popularity.desc");
+                                            "popularity.desc",
+                                            "1");
 
         Page pages = null;
 

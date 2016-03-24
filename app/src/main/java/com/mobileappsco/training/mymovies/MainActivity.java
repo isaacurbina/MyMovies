@@ -2,9 +2,12 @@ package com.mobileappsco.training.mymovies;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.mobileappsco.training.mymovies.Fragments.ResultsFragment;
 import com.mobileappsco.training.mymovies.Fragments.SearchFormFragment;
@@ -12,7 +15,7 @@ import com.mobileappsco.training.mymovies.Fragments.SearchFormFragment;
 /**
  * A login screen that offers login via email/password.
  */
-public class MainActivity extends AppCompatActivity implements ResultsFragment.SearchFragmentListener, SearchFormFragment.FormFragmentListener {
+public class MainActivity extends AppCompatActivity implements ResultsFragment.ResultsFragmentListener, SearchFormFragment.FormFragmentListener {
 
     FragmentManager fragmentManager = getFragmentManager();
     ResultsFragment resultsFragment;
@@ -36,11 +39,12 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.S
         API_IMAGES_URL = getResources().getString(R.string.API_IMAGES_URL);
 
         // Get fragments
-        if (findViewById(R.id.search_fragment_container) != null) {
+        if (findViewById(R.id.results_fragment_container) != null) {
             if (savedInstanceState == null) {
                 resultsFragment = new ResultsFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.search_fragment_container, resultsFragment, RESTAG)
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.results_fragment_container, resultsFragment, RESTAG)
                         .commit();
             }
         }
@@ -48,22 +52,24 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.S
     }
 
     @Override
-    public void bridgeWithForm(String title, String year) {
+    public void bridgeWithForm(String search_title, String search_year) {
         //resultsFragment.makeJsonObjectRequest(title, year);
         // if it's tablet landscape
-        if (findViewById(R.id.search_fragment_container) != null) {
-            resultsFragment = ResultsFragment.newInstance(title, year);
+        if (findViewById(R.id.results_fragment_container) != null) {
+            resultsFragment = ResultsFragment.newInstance(search_title, search_year);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.search_fragment_container, resultsFragment, RESTAG)
+                    .replace(R.id.results_fragment_container, resultsFragment, RESTAG)
                     .commit();
-
         } else { // rest of the devices
-            //Intent i = new Intent(this, CatalogActivity.class);
+            Intent i = new Intent(this, ResultsActivity.class);
+            i.putExtra("search_title", search_title);
+            i.putExtra("search_year", search_year);
+            startActivity(i);
         }
     }
 
     @Override
-    public void bridgeWithSearch(String q) {
+    public void bridgeWithResults(String q) {
 
     }
 }

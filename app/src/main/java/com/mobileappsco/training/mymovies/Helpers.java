@@ -20,19 +20,22 @@ public class Helpers {
 
 
     public static void logAndToast(Context context, String message, int type) {
-        switch (type) {
-            case Log.INFO:
-                Log.i(context.getString(R.string.MY_TAG), message);
-                //Toast.makeText(context, "INFO >> "+message, Toast.LENGTH_SHORT).show();
-                break;
-            case Log.ERROR:
-                Log.e(context.getString(R.string.MY_TAG), message);
-                //Toast.makeText(context, "ERROR >> "+message, Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                Log.d(context.getString(R.string.MY_TAG), message);
-                //Toast.makeText(context, "Debug >> "+message, Toast.LENGTH_SHORT).show();
-                break;
+        boolean debug = context.getResources().getBoolean(R.bool.debug);
+        if (debug) {
+            switch (type) {
+                case Log.INFO:
+                    Log.i(context.getString(R.string.MY_TAG), message);
+                    //Toast.makeText(context, "INFO >> "+message, Toast.LENGTH_SHORT).show();
+                    break;
+                case Log.ERROR:
+                    Log.e(context.getString(R.string.MY_TAG), message);
+                    //Toast.makeText(context, "ERROR >> "+message, Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Log.d(context.getString(R.string.MY_TAG), message);
+                    //Toast.makeText(context, "Debug >> "+message, Toast.LENGTH_SHORT).show();
+                    break;
+            }
         }
     }
 }

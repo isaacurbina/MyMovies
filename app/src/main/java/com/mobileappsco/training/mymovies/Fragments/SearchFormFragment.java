@@ -36,6 +36,7 @@ public class SearchFormFragment extends Fragment implements View.OnClickListener
         formYear = (EditText) v.findViewById(R.id.form_year);
         formButton = (Button) v.findViewById(R.id.form_button);
         formButton.setOnClickListener(this);
+        formTitle.clearFocus();
         return v;
     }
 
@@ -62,6 +63,7 @@ public class SearchFormFragment extends Fragment implements View.OnClickListener
         title = formTitle.getText().toString();
         year = formYear.getText().toString();
         mListener.bridgeWithForm(title, year);
+        formTitle.clearFocus();
     }
 
     public interface FormFragmentListener {

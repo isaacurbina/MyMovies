@@ -22,5 +22,6 @@
     <string name="MY_TAG">
         com.mobileappsco.training.mymovies
     </string>
+    <bool name="debug">true</bool>
 
 </resources>

@@ -8,11 +8,12 @@ import android.os.Bundle;
 import com.mobileappsco.training.mymovies.Fragments.ResultsFragment;
 import com.mobileappsco.training.mymovies.Fragments.SearchFormFragment;
 
-public class ResultsActivity extends AppCompatActivity {
+public class ResultsActivity extends AppCompatActivity implements ResultsFragment.ResultsFragmentListener{
 
     FragmentManager fragmentManager = getFragmentManager();
     ResultsFragment resultsFragment;
     public static String API_JSON_URL, API_IMAGES_URL, API_KEY;
+    String RESTAG = "RESTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,21 @@ public class ResultsActivity extends AppCompatActivity {
         API_JSON_URL = getResources().getString(R.string.API_JSON_URL);
         API_IMAGES_URL = getResources().getString(R.string.API_IMAGES_URL);
 
-        resultsFragment = (ResultsFragment) getSupportFragmentManager().findFragmentById(R.id.results_fragment);
+        String search_title = "";
+        String search_year = "";
+        if (getIntent().hasExtra("search_title"))
+            search_title = getIntent().getExtras().getString("search_title");
+        if (getIntent().hasExtra("search_title"))
+            search_year = getIntent().getExtras().getString("search_year");
+        resultsFragment = ResultsFragment.newInstance(search_title, search_year);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.results_fragment_container, resultsFragment, RESTAG)
+                .commit();
+    }
+
+    @Override
+    public void bridgeWithResults(String q) {
+
     }
 }
