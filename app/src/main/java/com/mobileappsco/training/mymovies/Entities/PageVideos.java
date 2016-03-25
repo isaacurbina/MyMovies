@@ -15,7 +15,7 @@ public class PageVideos extends SugarRecord {
     private Integer mid;
     @SerializedName("results")
     @Expose
-    private List<Result> results = new ArrayList<Result>();
+    private List<Video> results = new ArrayList<Video>();
 
     /**
      * 
@@ -40,7 +40,7 @@ public class PageVideos extends SugarRecord {
      * @return
      *     The results
      */
-    public List<Result> getResults() {
+    public List<Video> getResults() {
         return results;
     }
 
@@ -49,7 +49,7 @@ public class PageVideos extends SugarRecord {
      * @param results
      *     The results
      */
-    public void setResults(List<Result> results) {
+    public void setResults(List<Video> results) {
         this.results = results;
     }
 

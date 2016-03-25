@@ -137,7 +137,8 @@ public class ResultsFragment extends Fragment {
                     search_title,
                     search_year,
                     String.valueOf(page),
-                    language);
+                    language,
+                    getResources().getString(R.string.API_JSON_URL));
         } else { // if no internet, we try to load info from our database*/
             loadResultsOffline(search_title, search_year);
         }
@@ -273,7 +274,7 @@ public class ResultsFragment extends Fragment {
         protected List<Result> doInBackground(String... params) {
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(getResources().getString(R.string.API_JSON_URL))
+                    .baseUrl(params[4])
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             RetrofitInterface rfInterface = retrofit.create(RetrofitInterface.class);
@@ -300,7 +301,7 @@ public class ResultsFragment extends Fragment {
                 request = rfInterface.searchMovieByYear(
                         api_key,
                         search_year,
-                        "vote_average.desc",
+                        "popularity.desc",
                         page,
                         language);
             } else if (hasTitle && hasYear) {

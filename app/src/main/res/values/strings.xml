@@ -25,7 +25,7 @@
     <bool name="debug">true</bool>
 
     <!-- YouTube API -->
-    <string name="OAUTH_KEY" translatable="false">
+    <string name="YOUTUBE_API_KEY" translatable="false">
         4921591333-e0f080ap66lo83jt97dnkdtooji80d0q.apps.googleusercontent.com
     </string>
     <string name="action_settings">Settings</string>
@@ -34,5 +34,9 @@
     <string name="seek_to_hint">Seconds</string>
     <string name="card_id_hint">Card ID</string>
     <string name="language">en</string>
+    <string name="original_title">Original Title:</string>
+    <string name="overview">Overview:</string>
+    <string name="release_date">Release Date:</string>
+    <string name="trailer">Trailer:</string>
 
 </resources>

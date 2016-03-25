@@ -15,4 +15,8 @@
     <string name="seek_to">Ir a</string>
     <string name="seek_to_hint">Segundos</string>
     <string name="player_error">Erro ao inicializar o reprodutor do YouTube</string>
+    <string name="trailer">Trailer:</string>
+    <string name="release_date">Data de Lançamento:</string>
+    <string name="overview">Sinopse:</string>
+    <string name="original_title">Título Original:</string>
 </resources>

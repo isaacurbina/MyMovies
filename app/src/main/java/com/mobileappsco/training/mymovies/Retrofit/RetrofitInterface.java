@@ -46,10 +46,10 @@ public interface RetrofitInterface {
             @Query("language") String language
     );
 
-    // http://api.themoviedb.org/3/movie/285/videos?api_key=cac0b89ef7b5aa3a980f240f7c20af68
     @GET("movie/{id}/videos")
     Call<PageVideos> fetchVideosOfMovie(
+            @Path("id") String id,
             @Query("api_key") String apikey,
-            @Path("id") String id
+            @Query("language") String language
     );
 }

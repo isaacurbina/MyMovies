@@ -4,7 +4,6 @@
     <string name="player_error">错误初始化YouTube播放器</string>
     <string name="language">zh</string>
     <string name="form_title_hint">电影片名</string>
-    <string name="OAUTH_KEY" translatable="false"></string>
     <string name="action_settings">设置</string>
     <string name="card_id_hint">卡的ID</string>
     <string name="card_overview_hint">概述在这里。。。</string>
@@ -16,4 +15,8 @@
     <string name="search_year_hint">年</string>
     <string name="seek_to">跳到</string>
     <string name="seek_to_hint">秒钟</string>
+    <string name="release_date">发布日期:</string>
+    <string name="overview">简介:</string>
+    <string name="original_title">原的标题:</string>
+    <string name="trailer">电视广告:</string>
 </resources>

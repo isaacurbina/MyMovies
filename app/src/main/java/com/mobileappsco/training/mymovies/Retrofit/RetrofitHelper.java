@@ -1,7 +1,9 @@
 package com.mobileappsco.training.mymovies.Retrofit;
 
 import com.mobileappsco.training.mymovies.Entities.PageResults;
+import com.mobileappsco.training.mymovies.Entities.PageVideos;
 import com.mobileappsco.training.mymovies.Entities.Result;
+import com.mobileappsco.training.mymovies.Entities.Video;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -17,7 +19,8 @@ public class RetrofitHelper {
                 .build();
         RetrofitInterface rfInterface = retrofit.create(RetrofitInterface.class);
 
-        Call<PageResults> request = rfInterface.discoverMovies("cac0b89ef7b5aa3a980f240f7c20af68",
+        // TEST CASE FOR MOVIE LIST
+        /*Call<PageResults> request = rfInterface.discoverMovies("cac0b89ef7b5aa3a980f240f7c20af68",
                                             "popularity.desc",
                                             "1",
                                             "pt");
@@ -31,7 +34,23 @@ public class RetrofitHelper {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-        }
+        }*/
 
+        // TEST CASE FOR MEDIA BY MOVIE ID
+        Call<PageVideos> request = rfInterface.fetchVideosOfMovie(
+                "206647",
+                "cac0b89ef7b5aa3a980f240f7c20af68",
+                "es");
+
+        PageVideos pages = null;
+
+        try {
+            pages = request.execute().body();
+            for (Video result : pages.getResults()) {
+                System.out.println(result.getSite()+" "+result.getKey());
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

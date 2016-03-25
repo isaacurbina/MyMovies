@@ -15,4 +15,8 @@
     <string name="seek_to">Ir a</string>
     <string name="seek_to_hint">Segundos</string>
     <string name="language">es</string>
+    <string name="trailer">Trailer:</string>
+    <string name="release_date">Fecha de Estreno:</string>
+    <string name="original_title">Título Original:</string>
+    <string name="overview">Sinopsis:</string>
 </resources>

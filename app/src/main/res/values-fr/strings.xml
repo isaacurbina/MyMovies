@@ -15,4 +15,8 @@
     <string name="search_year_hint">Année</string>
     <string name="seek_to">Aller à</string>
     <string name="seek_to_hint">Seconds</string>
+    <string name="trailer">Bande Annonce:</string>
+    <string name="release_date">Date de Sortie:</string>
+    <string name="overview">Sommaire:</string>
+    <string name="original_title">Titre Original:</string>
 </resources>
