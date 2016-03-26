@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.mobileappsco.training.mymovies.Entities.Favorites;
 import com.mobileappsco.training.mymovies.Entities.PageResults;
@@ -39,7 +40,7 @@ public class DetailActivity extends AppCompatActivity implements YouTubePlayer.O
 
     private static final int RECOVERY_REQUEST = 1;
     private YouTubePlayerView youTubeView;
-
+    private YouTubePlayerFragment youTubeFragment;
     TextView detailTitle;
     TextView detailOriginalTitle;
     TextView detailOverview;
@@ -120,6 +121,9 @@ public class DetailActivity extends AppCompatActivity implements YouTubePlayer.O
         YOUTUBE_VIDEO_V = v;
         //youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         //youTubeView.initialize(YOUTUBE_API_KEY, this);
+        youTubeFragment = (YouTubePlayerFragment)getFragmentManager()
+                .findFragmentById(R.id.youtube_fragment);
+        youTubeFragment.initialize(YOUTUBE_API_KEY, this);
     }
 
     @Override
