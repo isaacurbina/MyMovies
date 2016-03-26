@@ -137,7 +137,7 @@ public class Result {
      *     The genreIds
      */
     public List<Integer> getGenreIds() {
-        return genreIds;
+        return null; /*genreIds;*/
     }
 
     /**

@@ -4,9 +4,12 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.mobileappsco.training.mymovies.Entities.Favorites;
 import com.mobileappsco.training.mymovies.Entities.PageResults;
 import com.mobileappsco.training.mymovies.Entities.PageVideos;
 import com.mobileappsco.training.mymovies.Entities.Result;
@@ -31,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DetailActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+public class DetailActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
 
     private static final int RECOVERY_REQUEST = 1;
     private YouTubePlayerView youTubeView;
@@ -48,6 +52,7 @@ public class DetailActivity extends YouTubeBaseActivity implements YouTubePlayer
     String language;
     String YOUTUBE_VIDEO_V;
     ActionBar actionBar;
+    String result_id;
 
     // TODO read videos from youtube for the detail view
     @Override
@@ -80,8 +85,7 @@ public class DetailActivity extends YouTubeBaseActivity implements YouTubePlayer
     }
 
     public void initDetails() {
-        String result_id = getIntent().getExtras().getString("result_id");
-        Log.i("MYTAG", "result_id " + result_id);
+        result_id = getIntent().getExtras().getString("result_id");
         //List<Result> results = Result.find(Result.class, "mid = ?", result_id);
         List<Result> results = SugarRecord.find(Result.class, "id = ?", result_id);
         if (results.size()>0) {
@@ -114,8 +118,8 @@ public class DetailActivity extends YouTubeBaseActivity implements YouTubePlayer
         Log.i("MYTAG", "Loading video: " + v);
         // YouTube initialization
         YOUTUBE_VIDEO_V = v;
-        youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
-        youTubeView.initialize(YOUTUBE_API_KEY, this);
+        //youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
+        //youTubeView.initialize(YOUTUBE_API_KEY, this);
     }
 
     @Override
@@ -162,7 +166,11 @@ public class DetailActivity extends YouTubeBaseActivity implements YouTubePlayer
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.save_favorite) {
+            Favorites fav = new Favorites();
+            fav.setId(Long.parseLong(result_id));
+            SugarRecord.save(fav);
+            Toast.makeText(this, R.string.added_to_favorites, Toast.LENGTH_SHORT).show();
             return true;
         }
 

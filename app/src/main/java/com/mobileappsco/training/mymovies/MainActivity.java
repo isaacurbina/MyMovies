@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.mobileappsco.training.mymovies.Entities.Favorites;
 import com.mobileappsco.training.mymovies.Fragments.ResultsFragment;
 import com.mobileappsco.training.mymovies.Fragments.SearchFormFragment;
+import com.orm.SugarRecord;
 
 /**
  * A login screen that offers login via email/password.
@@ -53,10 +55,9 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
 
     @Override
     public void bridgeWithForm(String search_title, String search_year) {
-        //resultsFragment.makeJsonObjectRequest(title, year);
         // if it's tablet landscape
         if (findViewById(R.id.results_fragment_container) != null) {
-            resultsFragment = ResultsFragment.newInstance(search_title, search_year);
+            resultsFragment = ResultsFragment.newInstance(search_title, search_year, "");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.results_fragment_container, resultsFragment, RESTAG)
                     .commit();
@@ -64,6 +65,22 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
             Intent i = new Intent(this, ResultsActivity.class);
             i.putExtra("search_title", search_title);
             i.putExtra("search_year", search_year);
+            i.putExtra("show_favorites", "");
+            startActivity(i);
+        }
+    }
+
+    @Override
+    public void displayFavorites() {
+        // if it's tablet landscape
+        if (findViewById(R.id.results_fragment_container) != null) {
+            resultsFragment = ResultsFragment.newInstance("", "", "fav");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.results_fragment_container, resultsFragment, RESTAG)
+                    .commit();
+        } else { // rest of the devices
+            Intent i = new Intent(this, ResultsActivity.class);
+            i.putExtra("show_favorites", "fav");
             startActivity(i);
         }
     }

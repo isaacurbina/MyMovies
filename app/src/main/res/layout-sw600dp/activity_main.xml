@@ -13,16 +13,15 @@
 
     <fragment
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:name="com.mobileappsco.training.mymovies.Fragments.SearchFormFragment"
         android:id="@+id/searchform_fragment"
         android:layout_gravity="center"
-        android:layout_weight="3"
         tools:layout="@layout/fragment_searchform" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:id="@+id/results_fragment_container"
         android:layout_gravity="center"
         android:layout_weight="1" >

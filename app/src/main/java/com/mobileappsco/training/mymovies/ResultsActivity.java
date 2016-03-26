@@ -32,11 +32,14 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
 
         String search_title = "";
         String search_year = "";
+        String show_favorites = "";
         if (getIntent().hasExtra("search_title"))
             search_title = getIntent().getExtras().getString("search_title");
         if (getIntent().hasExtra("search_title"))
             search_year = getIntent().getExtras().getString("search_year");
-        resultsFragment = ResultsFragment.newInstance(search_title, search_year);
+        if (getIntent().hasExtra("show_favorites"))
+            show_favorites = getIntent().getExtras().getString("show_favorites");
+        resultsFragment = ResultsFragment.newInstance(search_title, search_year, show_favorites);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.results_fragment_container, resultsFragment, RESTAG)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/save_favorite"
-        android:title="@string/save_favorite"
+    <item android:id="@+id/favorites"
+        android:title="@string/favorites"
         android:showAsAction="always"/>
 </menu>

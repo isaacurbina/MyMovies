@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.mobileappsco.training.mymovies.Adapters.RVAdapter;
 import com.mobileappsco.training.mymovies.DetailActivity;
+import com.mobileappsco.training.mymovies.Entities.Favorites;
 import com.mobileappsco.training.mymovies.Entities.PageResults;
 import com.mobileappsco.training.mymovies.Entities.Result;
 import com.mobileappsco.training.mymovies.Listeners.EndlessRecyclerOnScrollListener;
@@ -37,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResultsFragment extends Fragment {
 
-    String search_title, search_year;
+    String search_title, search_year, show_favorites;
     ResultsFragmentListener searchListener;
     RecyclerView recyclerView;
     LinearLayoutManager llm;
@@ -69,10 +70,11 @@ public class ResultsFragment extends Fragment {
             return 2;
     }
 
-    public static ResultsFragment newInstance(String title, String year) {
+    public static ResultsFragment newInstance(String title, String year, String favorites) {
         final Bundle args = new Bundle();
         args.putString("search_title", title);
         args.putString("search_year", year);
+        args.putString("show_favorites", favorites);
         ResultsFragment resultsFragment = new ResultsFragment();
         resultsFragment.setArguments(args);
         return resultsFragment;
@@ -87,6 +89,12 @@ public class ResultsFragment extends Fragment {
         if (args!=null) {
             search_title = args.getString("search_title");
             search_year = args.getString("search_year");
+            show_favorites = args.getString("show_favorites");
+            Log.i("MYTAG", "variables "+
+                            search_title+" - "+
+                            search_year+" - "+
+                            show_favorites
+            );
         }
 
         this.columns = getSupportedColumns(container.getRootView());
@@ -106,8 +114,10 @@ public class ResultsFragment extends Fragment {
                 if (!loading) {
                     loading = true;
                     page++;
-                    Toast.makeText(context, "Loading page " + page, Toast.LENGTH_SHORT).show();
-                    fetchContent();
+                    if (isNetworkAvailable()) {
+                        fetchContent();
+                        Toast.makeText(context, "Loading page " + page, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -131,8 +141,11 @@ public class ResultsFragment extends Fragment {
 
     public void fetchContent() {
         // If we have internet we fetch information from the REST service
-        if (isNetworkAvailable()) {
-            FetchMoviesTask mytask = new FetchMoviesTask();
+        if (valueSet(show_favorites)) {
+            FetchFavoritesTask mytask = new FetchFavoritesTask();
+            mytask.execute();
+        } else if (isNetworkAvailable()) {
+            FetchMoviesOnlineTask mytask = new FetchMoviesOnlineTask();
             mytask.execute(
                     search_title,
                     search_year,
@@ -140,7 +153,10 @@ public class ResultsFragment extends Fragment {
                     language,
                     getResources().getString(R.string.API_JSON_URL));
         } else { // if no internet, we try to load info from our database*/
-            loadResultsOffline(search_title, search_year);
+            FetchMoviesOfflineTask mytask = new FetchMoviesOfflineTask();
+            mytask.execute(
+                    search_title,
+                    search_year);
         }
     }
 
@@ -163,36 +179,6 @@ public class ResultsFragment extends Fragment {
 
     public interface ResultsFragmentListener {
         void bridgeWithResults(String q);
-    }
-
-    public void loadResultsOffline(String search_title, String search_year) {
-        boolean hasTitle = valueSet(search_title);
-        boolean hasYear = valueSet(search_year);
-        search_title = "%"+search_title+"%";
-        List<Result> results;
-        if (hasTitle && !hasYear) {
-            results = SugarRecord.find(
-                    Result.class,
-                    "title LIKE ? OR original_title LIKE ? OR overview LIKE ?",
-                    search_title, search_title, search_title);
-            Log.i("MYTAG", "Offline search by title: "+results.size());
-        } else if (!hasTitle && hasYear) {
-            results = SugarRecord.find(
-                    Result.class,
-                    "release_date LIKE ?",
-                    search_year+"%");
-            Log.i("MYTAG", "Offline search by year: "+results.size());
-        } else if (hasTitle && hasYear) {
-            results = SugarRecord.find(
-                    Result.class,
-                    "(title LIKE ? OR original_title LIKE ? OR overview LIKE ?) AND release_date LIKE ?",
-                    search_title, search_title, search_title, search_year+"%");
-            Log.i("MYTAG", "Offline search by year: "+results.size());
-        } else {
-            results = SugarRecord.listAll(Result.class, "popularity DESC");
-        }
-        adapter = new RVAdapter(context, results);
-        recyclerView.setAdapter(adapter);
     }
 
     private boolean isNetworkAvailable() {
@@ -226,7 +212,54 @@ public class ResultsFragment extends Fragment {
             return false;
     }
 
-    private class FetchMoviesTask extends AsyncTask<String, Integer, List<Result>> {
+    private class FetchMoviesOfflineTask extends AsyncTask<String, Integer, List<Result>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(List<Result> resultstask) {
+            super.onPostExecute(resultstask);
+            adapter = new RVAdapter(context, resultstask);
+            recyclerView.setAdapter(adapter);
+        }
+
+        @Override
+        protected List<Result> doInBackground(String... params) {
+            String search_title = params[0];
+            String search_year = params[1];
+            boolean hasTitle = valueSet(search_title);
+            boolean hasYear = valueSet(search_year);
+            search_title = "%"+search_title+"%";
+            List<Result> resultstask;
+            if (hasTitle && !hasYear) {
+                resultstask = SugarRecord.find(
+                        Result.class,
+                        "title LIKE ? OR original_title LIKE ? OR overview LIKE ?",
+                        search_title, search_title, search_title);
+                Log.i("MYTAG", "Offline search by title: "+resultstask.size());
+            } else if (!hasTitle && hasYear) {
+                resultstask = SugarRecord.find(
+                        Result.class,
+                        "release_date LIKE ?",
+                        search_year+"%");
+                Log.i("MYTAG", "Offline search by year: "+resultstask.size());
+            } else if (hasTitle && hasYear) {
+                resultstask = SugarRecord.find(
+                        Result.class,
+                        "(title LIKE ? OR original_title LIKE ? OR overview LIKE ?) AND release_date LIKE ?",
+                        search_title, search_title, search_title, search_year+"%");
+                Log.i("MYTAG", "Offline search by year: "+resultstask.size());
+            } else {
+                resultstask = SugarRecord.listAll(Result.class, "popularity DESC");
+            }
+            return resultstask;
+        }
+    }
+
+    private class FetchMoviesOnlineTask extends AsyncTask<String, Integer, List<Result>> {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
@@ -257,9 +290,9 @@ public class ResultsFragment extends Fragment {
                         List<Result> res2 = SugarRecord.find(Result.class, "id = ?", res1.getId().toString());
                         if (res2.size()==0) {
                             SugarRecord.save(res1);
-                            Log.i("MYTAG", "saving a result "+res1.getId());
+                            //Log.i("MYTAG", "saving a result "+res1.getId());
                         } else {
-                            Log.i("MYTAG", "already had, updating result " + res1.getId());
+                            //Log.i("MYTAG", "already had, updating result " + res1.getId());
                             updateResult(res1, res2.get(0));
                         }
                     }
@@ -330,6 +363,34 @@ public class ResultsFragment extends Fragment {
             }
             return resultsasync;
 
+        }
+    }
+
+    private class FetchFavoritesTask extends AsyncTask<String, Integer, List<Result>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(List<Result> resultstask) {
+            super.onPostExecute(resultstask);
+            adapter = new RVAdapter(context, resultstask);
+            recyclerView.setAdapter(adapter);
+        }
+
+        @Override
+        protected List<Result> doInBackground(String... params) {
+
+            List<Result> resultstask = new ArrayList<>();
+            List<Favorites> favorites = SugarRecord.listAll(Favorites.class, "id DESC");
+            for (Favorites fav1: favorites) {
+                Result res1 = SugarRecord.findById(Result.class, fav1.getId());
+                if (res1 != null)
+                    resultstask.add(res1);
+            }
+            return resultstask;
         }
     }
 
