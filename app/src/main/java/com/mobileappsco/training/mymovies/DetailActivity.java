@@ -8,25 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.mobileappsco.training.mymovies.Entities.Favorites;
-import com.mobileappsco.training.mymovies.Entities.PageResults;
-import com.mobileappsco.training.mymovies.Entities.PageVideos;
-import com.mobileappsco.training.mymovies.Entities.Result;
-import com.mobileappsco.training.mymovies.Entities.Video;
-import com.mobileappsco.training.mymovies.Retrofit.RetrofitInterface;
+import com.mobileappsco.training.mymovies.entities.Favorites;
+import com.mobileappsco.training.mymovies.entities.PageVideos;
+import com.mobileappsco.training.mymovies.entities.Result;
+import com.mobileappsco.training.mymovies.entities.Video;
+import com.mobileappsco.training.mymovies.retrofit.RetrofitInterface;
 import com.orm.SugarRecord;
 
 import java.util.ArrayList;
@@ -205,6 +201,12 @@ public class DetailActivity extends AppCompatActivity implements YouTubePlayer.O
                         setupVideo(ytvideo.getKey().toString());
                     } else {
                         Log.i("MYTAG", "No media found");
+                        // there's no video
+                        youTubeFragment = (YouTubePlayerFragment)getFragmentManager()
+                                .findFragmentById(R.id.youtube_fragment);
+                        getFragmentManager().beginTransaction()
+                                .remove(youTubeFragment)
+                                .commit();
                     }
                 }
             } catch (Exception e) {

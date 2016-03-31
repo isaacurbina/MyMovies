@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".Fragments.ResultsFragment">
+    tools:context=".fragments.ResultsFragment">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

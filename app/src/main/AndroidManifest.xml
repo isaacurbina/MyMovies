@@ -42,4 +42,10 @@
             android:label="@string/app_name"/>
     </application>
 
+    <provider
+        android:authorities="com.mobileappsco.training.mymovies"
+        android:name=".providers.ResultProvider"
+        android:exported="true" >
+    </provider>
+
 </manifest>

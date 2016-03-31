@@ -1,18 +1,13 @@
 package com.mobileappsco.training.mymovies;
 
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.mobileappsco.training.mymovies.Entities.Favorites;
-import com.mobileappsco.training.mymovies.Fragments.ResultsFragment;
-import com.mobileappsco.training.mymovies.Fragments.SearchFormFragment;
-import com.orm.SugarRecord;
+import com.mobileappsco.training.mymovies.fragments.ResultsFragment;
+import com.mobileappsco.training.mymovies.fragments.SearchFormFragment;
 
 /**
  * A login screen that offers login via email/password.

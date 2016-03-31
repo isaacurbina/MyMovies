@@ -5,8 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.mobileappsco.training.mymovies.Fragments.ResultsFragment;
-import com.mobileappsco.training.mymovies.Fragments.SearchFormFragment;
+import com.mobileappsco.training.mymovies.fragments.ResultsFragment;
 
 public class ResultsActivity extends AppCompatActivity implements ResultsFragment.ResultsFragmentListener{
 

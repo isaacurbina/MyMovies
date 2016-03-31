@@ -14,7 +14,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.mobileappsco.training.mymovies.Fragments.SearchFormFragment"
+        android:name="com.mobileappsco.training.mymovies.fragments.SearchFormFragment"
         android:id="@+id/searchform_fragment"
         android:layout_gravity="center"
         tools:layout="@layout/fragment_searchform" />
