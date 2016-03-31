@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies.providers;
+package com.mobileappsco.training.mymovies.traditionalproviders;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

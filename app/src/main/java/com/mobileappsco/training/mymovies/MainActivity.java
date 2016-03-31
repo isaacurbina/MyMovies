@@ -2,12 +2,18 @@ package com.mobileappsco.training.mymovies;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.mobileappsco.training.mymovies.fragments.ResultsFragment;
 import com.mobileappsco.training.mymovies.fragments.SearchFormFragment;
+import com.mobileappsco.training.mymovies.schematic.MoviesProvider;
+import com.mobileappsco.training.mymovies.traditionalproviders.MoviesContract;
 
 /**
  * A login screen that offers login via email/password.
@@ -46,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
             }
         }
         searchFormFragment = (SearchFormFragment) getSupportFragmentManager().findFragmentById(R.id.searchform_fragment);
+        getMovies();
     }
 
     @Override
@@ -83,6 +90,29 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
     @Override
     public void bridgeWithResults(String q) {
 
+    }
+
+    public void getMovies() {
+        Log.i("PROVIDER", "getMovies()");
+        Uri uri = MoviesProvider.Movies.MOVIES;
+        String[] proj = MoviesProvider.MOVIES_PROJECTION;
+        String selection = "";
+
+        String URL = "content://com.example.provider.College/students";
+
+        Uri students = Uri.parse(URL);
+        Cursor c = managedQuery(students, null, null, null, "name");
+
+        if (c.moveToFirst()) {
+            do{
+                Toast.makeText(this,
+                        c.getString(c.getColumnIndex(com.mobileappsco.training.mymovies.MoviesProvider._ID)) +
+                                ", " +  c.getString(c.getColumnIndex( StudentsProvider.NAME)) +
+                                ", " + c.getString(c.getColumnIndex( StudentsProvider.GRADE)),
+                        Toast.LENGTH_SHORT).show();
+            } while (c.moveToNext());
+        }
+        return managedQuery(uri, proj, null, null, null);
     }
 }
 
