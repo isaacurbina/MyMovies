@@ -5,9 +5,9 @@ import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.PrimaryKey;
 
-public interface MovieColumns {
+public interface ResultColumns {
     @DataType(DataType.Type.INTEGER) @PrimaryKey
-    String _ID = "_id";
+    String _ID = "id";
     @DataType(DataType.Type.TEXT) @NotNull
     String POSTER_PATH = "poster_path";
     @DataType(DataType.Type.TEXT) @NotNull

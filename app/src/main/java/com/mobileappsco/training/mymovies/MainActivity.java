@@ -2,12 +2,18 @@ package com.mobileappsco.training.mymovies;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.mobileappsco.training.mymovies.fragments.ResultsFragment;
 import com.mobileappsco.training.mymovies.fragments.SearchFormFragment;
+import com.mobileappsco.training.mymovies.schematic.ResultColumns;
+import com.mobileappsco.training.mymovies.schematic.MoviesProvider;
 
 /**
  * A login screen that offers login via email/password.
@@ -46,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
             }
         }
         searchFormFragment = (SearchFormFragment) getSupportFragmentManager().findFragmentById(R.id.searchform_fragment);
+        getMovies();
     }
 
     @Override
@@ -85,6 +92,26 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
 
     }
 
+    public void getMovies() {
+        try {
+            Log.i("PROVIDER", "getMovies()");
 
+            String URL = "content://" + MoviesProvider.AUTHORITY + "/" + MoviesProvider.MOVIES_PATH;
+
+            Log.i("PROVIDER", "URI: " + URL);
+            Uri movies = Uri.parse(URL);
+            Cursor c = managedQuery(movies, MoviesProvider.MOVIES_PROJECTION, null, null, ResultColumns.POPULARITY + " DESC");
+            Log.i("PROVIDER", "Registries: " + c.getCount());
+            if (c.moveToFirst()) {
+                do {
+                    Log.i("PROVIDER", "Cursor: "+c.getLong(c.getColumnIndex(ResultColumns._ID.toUpperCase())) +
+                            ", " + c.getString(c.getColumnIndex(ResultColumns.ORIGINAL_TITLE.toUpperCase())) +
+                            ", " + c.getString(c.getColumnIndex(ResultColumns.ORIGINAL_LANGUAGE.toUpperCase())));
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+
+        }
+    }
 }
 

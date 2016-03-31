@@ -5,9 +5,9 @@ import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.PrimaryKey;
 
-public interface TrailerColumns {
+public interface VideoColumns {
     @DataType(DataType.Type.TEXT) @PrimaryKey
-    String _ID = "_id";
+    String _ID = "mid";
     @DataType(DataType.Type.TEXT)
     String ISO_639_1 = "iso_639_1";
     @DataType(DataType.Type.TEXT)
