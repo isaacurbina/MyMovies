@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies.Fragments;
+package com.mobileappsco.training.mymovies.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,16 +17,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mobileappsco.training.mymovies.Adapters.RVAdapter;
+import com.mobileappsco.training.mymovies.adapters.RVAdapter;
 import com.mobileappsco.training.mymovies.DetailActivity;
-import com.mobileappsco.training.mymovies.Entities.Favorites;
-import com.mobileappsco.training.mymovies.Entities.PageResults;
-import com.mobileappsco.training.mymovies.Entities.Result;
-import com.mobileappsco.training.mymovies.Listeners.EndlessRecyclerOnScrollListener;
-import com.mobileappsco.training.mymovies.Listeners.RecyclerItemClickListener;
+import com.mobileappsco.training.mymovies.entities.Favorites;
+import com.mobileappsco.training.mymovies.entities.PageResults;
+import com.mobileappsco.training.mymovies.entities.Result;
+import com.mobileappsco.training.mymovies.listeners.EndlessRecyclerOnScrollListener;
+import com.mobileappsco.training.mymovies.listeners.RecyclerItemClickListener;
 import com.mobileappsco.training.mymovies.MainActivity;
 import com.mobileappsco.training.mymovies.R;
-import com.mobileappsco.training.mymovies.Retrofit.RetrofitInterface;
+import com.mobileappsco.training.mymovies.retrofit.RetrofitInterface;
 import com.orm.SugarRecord;
 
 import java.util.ArrayList;

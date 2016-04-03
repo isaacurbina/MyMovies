@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies.Entities;
+package com.mobileappsco.training.mymovies.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies.Adapters;
+package com.mobileappsco.training.mymovies.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mobileappsco.training.mymovies.Entities.Result;
+import com.mobileappsco.training.mymovies.entities.Result;
 import com.mobileappsco.training.mymovies.R;
 
 import java.util.List;

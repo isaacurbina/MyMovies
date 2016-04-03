@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies.Fragments;
+package com.mobileappsco.training.mymovies.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

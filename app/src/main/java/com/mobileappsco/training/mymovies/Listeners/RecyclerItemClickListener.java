@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies.Listeners;
+package com.mobileappsco.training.mymovies.listeners;
 
 
 import android.content.Context;

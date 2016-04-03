@@ -1,4 +1,4 @@
-package com.mobileappsco.training.mymovies.Listeners;
+package com.mobileappsco.training.mymovies.listeners;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;

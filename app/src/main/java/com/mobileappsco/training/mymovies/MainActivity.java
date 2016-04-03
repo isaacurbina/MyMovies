@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
             }
         }
         searchFormFragment = (SearchFormFragment) getSupportFragmentManager().findFragmentById(R.id.searchform_fragment);
-        getMovies();
+        //getMovies();
+        //getMovieWithID(12445);
+        getMoviesWithTitle("potter");
     }
 
     @Override
@@ -95,9 +97,7 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
     public void getMovies() {
         try {
             Log.i("PROVIDER", "getMovies()");
-
             String URL = "content://" + MoviesProvider.AUTHORITY + "/" + MoviesProvider.MOVIES_PATH;
-
             Log.i("PROVIDER", "URI: " + URL);
             Uri movies = Uri.parse(URL);
             Cursor c = managedQuery(movies, MoviesProvider.MOVIES_PROJECTION, null, null, ResultColumns.POPULARITY + " DESC");
@@ -111,6 +111,45 @@ public class MainActivity extends AppCompatActivity implements ResultsFragment.R
             }
         } catch (Exception e) {
 
+        }
+    }
+
+    public void getMovieWithID(long id) {
+        try {
+            Log.i("PROVIDER", "getMovieWithID(" + id + ")");
+            Uri movies = MoviesProvider.Movies.withId(id);
+            Log.i("PROVIDER", "URI: " + movies.toString());
+            Cursor c = managedQuery(movies, MoviesProvider.MOVIES_PROJECTION, null, null, ResultColumns.POPULARITY + " DESC");
+            Log.i("PROVIDER", "Registries: " + c.getCount());
+            if (c.moveToFirst()) {
+                do {
+                    Log.i("PROVIDER", "Cursor: "+c.getLong(c.getColumnIndex(ResultColumns._ID.toUpperCase())) +
+                            ", " + c.getString(c.getColumnIndex(ResultColumns.ORIGINAL_TITLE.toUpperCase())) +
+                            ", " + c.getString(c.getColumnIndex(ResultColumns.ORIGINAL_LANGUAGE.toUpperCase())));
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void getMoviesWithTitle(String title) {
+        try {
+            Log.i("PROVIDER", "getMoviesWithTitle(" + title + ")");
+
+            Uri movies = MoviesProvider.Movies.withTitle(title);
+            Log.i("PROVIDER", "URI: " + movies.toString());
+            Cursor c = managedQuery(movies, MoviesProvider.MOVIES_PROJECTION, null, null, ResultColumns.POPULARITY.toUpperCase() + " DESC");
+            Log.i("PROVIDER", "Registries: " + c.getCount());
+            if (c.moveToFirst()) {
+                do {
+                    Log.i("PROVIDER", "Cursor: "+c.getLong(c.getColumnIndex(ResultColumns._ID.toUpperCase())) +
+                            ", " + c.getString(c.getColumnIndex(ResultColumns.ORIGINAL_TITLE.toUpperCase())) +
+                            ", " + c.getString(c.getColumnIndex(ResultColumns.ORIGINAL_LANGUAGE.toUpperCase())));
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("PROVIDER", "Error: "+e.getMessage());
         }
     }
 }

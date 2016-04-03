@@ -71,27 +71,26 @@ public final class MoviesProvider {
                 whereColumn = ResultColumns.RELEASE_DATE,
                 pathSegment = 1)
         public static Uri withYear(String year) {
-            return Uri.parse("content://" + AUTHORITY + "/results/year/" + year);
+            return Uri.parse("content://" + AUTHORITY + "/movies/year/" + year);
         }
-        // Query by title, returns a set of records
         @InexactContentUri(
-                path = "movies/title/#",
+                path = "movies/title/*",
                 name = "TITLE",
                 type = "vnd.android.cursor.dir/list",
                 whereColumn = ResultColumns.TITLE,
                 pathSegment = 1)
         public static Uri withTitle(String title) {
-            return Uri.parse("content://" + AUTHORITY + "/results/title/" + title);
+            return Uri.parse("content://" + AUTHORITY + "/movies/title/" + title);
         }
         // Query by title, returns a set of records
         @InexactContentUri(
-                path = "/title/#/year/*",
+                path = "movies/title/*/year/#",
                 name = "TITLEYEAR",
                 type = "vnd.android.cursor.dir/list",
                 whereColumn = {ResultColumns.TITLE, ResultColumns.RELEASE_DATE},
                 pathSegment = {1,2})
         public static Uri withTitleAndYear(String title, String year) {
-            return Uri.parse("content://" + AUTHORITY + "/results/title/" + title + "/year/" + year);
+            return Uri.parse("content://" + AUTHORITY + "/movies/title/" + title + "/year/" + year);
         }
     }
     @TableEndpoint(table = TheMovieDB.TRAILERS)

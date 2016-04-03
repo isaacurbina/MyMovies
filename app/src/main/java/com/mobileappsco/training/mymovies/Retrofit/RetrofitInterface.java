@@ -1,7 +1,7 @@
-package com.mobileappsco.training.mymovies.Retrofit;
+package com.mobileappsco.training.mymovies.retrofit;
 
-import com.mobileappsco.training.mymovies.Entities.PageResults;
-import com.mobileappsco.training.mymovies.Entities.PageVideos;
+import com.mobileappsco.training.mymovies.entities.PageResults;
+import com.mobileappsco.training.mymovies.entities.PageVideos;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,8 +1,6 @@
-package com.mobileappsco.training.mymovies.Entities;
+package com.mobileappsco.training.mymovies.entities;
 
 import com.orm.SugarRecord;
-
-import java.util.Date;
 
 /**
  * Created by admin on 3/7/2016.
